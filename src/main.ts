@@ -12,7 +12,12 @@ async function bootstrap() {
     .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('yavidocs', app, document);
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe(
+      { whitelist:true,
+        forbidNonWhitelisted: true,
+        errorHttpStatusCode: 422,
+      }
+    ));
   await app.listen(3000);
 }
 bootstrap();

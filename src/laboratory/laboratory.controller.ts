@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { LaboratoryDto } from "./dto/laboratory.dto";
+import { CreateLaboratoryDto } from "./dto/create-laboratory.dto";
+import { UpdateLaboratoryDto } from "./dto/update-laboratory.dto";
 
 @ApiTags('Laboratory')
 @Controller('laboratory')
@@ -14,31 +15,31 @@ export class LaboratoryController {
 
     @ApiOperation({description:'Laboratory traer', summary:'Encontrar laboratorio'})
     @Get(':id')
-    findOne(@Param('id') id:number){
+    findOne(@Param('id', ParseIntPipe) id:number){
         return id;
     }
 
     @ApiOperation({description:'Crear Laboratoryio', summary:'Crear laboratorio'})
     @Post()
-    create(@Body() laboratoryDto: LaboratoryDto){
-        return laboratoryDto;
+    create(@Body() createLaboratoryDto: CreateLaboratoryDto){
+        return createLaboratoryDto;
     }
 
     @ApiOperation({description:'Actualizar libro Laboratorio', summary:'Actualizar laboratorio'})
     @Put(':id')
-    update(@Param('id') id:number, @Body() payload:any){
-        return {id, body: payload};
+    update(@Param('id', ParseIntPipe) id:number, @Body() updateLaboratoryDto: UpdateLaboratoryDto){
+        return {id, body: updateLaboratoryDto};
     }
 
     @ApiOperation({description:'Actualizado parcial', summary:'Actualizar laboratorio'})
     @Patch(':id')
-    changeState(@Param('id') id:number, @Body() payload:any){
-        return {id, payload}
+    changeState(@Param('id', ParseIntPipe) id:number, @Body() updateLaboratoryDto: UpdateLaboratoryDto){
+        return {id, body: updateLaboratoryDto};
     }
 
     @ApiOperation({description:'Eliminar laboratorio', summary:'Eliminar laboratorio'})
     @Delete(':id')
-    delete(@Param('id') id:number, @Body() payload:any){
+    delete(@Param('id', ParseIntPipe) id:number, @Body() payload:any){
         return `reistro eliminado ${id}`;
     }
 }  

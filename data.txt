@@ -1,0 +1,13 @@
+//Laboratorios
+{
+    "nombreLab":"HP",
+    "monitores":"lg",
+    "cpu":"altek",
+    "teclado":"altek",
+    "audifonos":"razor",
+    "infocus":"epson",
+    "mouse":"logitech",
+    "sillas":"40",
+    "mesas":"fila2",
+    "observaciones":"ninguna"
+}

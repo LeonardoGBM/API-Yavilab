@@ -6,7 +6,7 @@ import { LaboratoryController } from './laboratory/laboratory.controller';
 
 @Module({
   imports: [LaboratoryModule],
-  controllers: [AppController, LaboratoryController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
