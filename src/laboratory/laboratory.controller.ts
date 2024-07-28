@@ -1,19 +1,20 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { CreateLaboratoryDto } from "./dto/create-laboratory.dto";
 import { UpdateLaboratoryDto } from "./dto/update-laboratory.dto";
+import { LaboratoryDto } from "./dto/laboratory.dto";
 
 @ApiTags('Laboratory')
 @Controller('laboratory')
 export class LaboratoryController {
 
-    @ApiOperation({description:'Laboratory traer', summary:'Encontrar laboratorios'})
+    @ApiOperation({description:'Traer laboratorios', summary:'Encontrar laboratorios'})
     @Get()
     find(@Query() query:any){
-        return query;
+
+        return  query;
     }
 
-    @ApiOperation({description:'Laboratory traer', summary:'Encontrar laboratorio'})
+    @ApiOperation({description:'Traer laboratorio', summary:'Encontrar laboratorio'})
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id:number){
         return id;
@@ -21,11 +22,11 @@ export class LaboratoryController {
 
     @ApiOperation({description:'Crear Laboratoryio', summary:'Crear laboratorio'})
     @Post()
-    create(@Body() createLaboratoryDto: CreateLaboratoryDto){
+    create(@Body() createLaboratoryDto: LaboratoryDto){
         return createLaboratoryDto;
     }
 
-    @ApiOperation({description:'Actualizar libro Laboratorio', summary:'Actualizar laboratorio'})
+    @ApiOperation({description:'Actualizar Laboratorio', summary:'Actualizar laboratorio'})
     @Put(':id')
     update(@Param('id', ParseIntPipe) id:number, @Body() updateLaboratoryDto: UpdateLaboratoryDto){
         return {id, body: updateLaboratoryDto};

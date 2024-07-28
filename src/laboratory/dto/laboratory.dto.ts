@@ -1,36 +1,36 @@
 import { IsNotEmpty, MinLength } from "class-validator";
 
-export class LaboratoryDto{
+export class LaboratoryDto {
 
-    @MinLength(3, {message: 'El nombre del laboratorio debe tener mínimo 3 letras'})
+    @MinLength(3, { message: 'El nombre del laboratorio debe tener mínimo 3 letras' })
     @IsNotEmpty()
-    nombreLab: string;
+    nombre_lab: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     monitores: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     cpu: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     teclado: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     audifonos: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     infocus: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     mouse: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     sillas: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     mesas: string;
 
-     @IsNotEmpty()
+    @IsNotEmpty()
     observaciones: string;
 
 }
