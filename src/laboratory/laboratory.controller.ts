@@ -2,34 +2,40 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Q
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { UpdateLaboratoryDto } from "./dto/update-laboratory.dto";
 import { LaboratoryDto } from "./dto/laboratory.dto";
+import { LaboratoryService } from "./laboratory.service";
 
 @ApiTags('Laboratory')
 @Controller('laboratory')
 export class LaboratoryController {
+    constructor( private readonly laboratoryService:LaboratoryService){
 
+    }
     @ApiOperation({description:'Traer laboratorios', summary:'Encontrar laboratorios'})
     @Get()
-    find(@Query() query:any){
-
-        return  query;
+    async find(@Query() query:any){
+        const response = await this.laboratoryService.find();
+        return  response;
     }
 
     @ApiOperation({description:'Traer laboratorio', summary:'Encontrar laboratorio'})
     @Get(':id')
-    findOne(@Param('id', ParseIntPipe) id:number){
-        return id;
+    async findOne(@Param('id', ParseIntPipe) id:number){
+        const response = await this.laboratoryService.findOne(id);
+        return response;
     }
 
     @ApiOperation({description:'Crear Laboratoryio', summary:'Crear laboratorio'})
     @Post()
-    create(@Body() createLaboratoryDto: LaboratoryDto){
-        return createLaboratoryDto;
+    async create(@Body() createLaboratoryDto: LaboratoryDto){
+        const response = await this.laboratoryService.create(createLaboratoryDto)
+        return response;
     }
 
     @ApiOperation({description:'Actualizar Laboratorio', summary:'Actualizar laboratorio'})
     @Put(':id')
-    update(@Param('id', ParseIntPipe) id:number, @Body() updateLaboratoryDto: UpdateLaboratoryDto){
-        return {id, body: updateLaboratoryDto};
+    async update(@Param('id', ParseIntPipe) id:number, @Body() updateLaboratoryDto: UpdateLaboratoryDto){
+        const response = await this.laboratoryService.update(id, updateLaboratoryDto)
+        return response;
     }
 
     @ApiOperation({description:'Actualizado parcial', summary:'Actualizar laboratorio'})
@@ -40,7 +46,8 @@ export class LaboratoryController {
 
     @ApiOperation({description:'Eliminar laboratorio', summary:'Eliminar laboratorio'})
     @Delete(':id')
-    delete(@Param('id', ParseIntPipe) id:number, @Body() payload:any){
-        return `reistro eliminado ${id}`;
+    async delete(@Param('id', ParseIntPipe) id:number){
+        const response = await this.laboratoryService.delete(id)
+        return response;
     }
 }  

@@ -10,5 +10,6 @@ export class UpdateLaboratoryDto extends PickType(LaboratoryDto,[
     'infocus',
     'mouse',
     'sillas',
-    'mesas'
+    'mesas',
+    'observaciones'
 ]){}
