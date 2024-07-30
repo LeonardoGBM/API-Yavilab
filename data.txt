@@ -1,6 +1,6 @@
 //Laboratorios
 {
-    "nombreLab":"HP",
+    "nombre_lab":"HP",
     "monitores":"lg",
     "cpu":"altek",
     "teclado":"altek",
@@ -10,4 +10,15 @@
     "sillas":"40",
     "mesas":"fila2",
     "observaciones":"ninguna"
+}
+
+//damage
+
+{
+    "numero_serie":"2023s",
+    "hora_dano":"12h",
+    "fecha_dano":"12/12/2028",
+    "fecha_cambio":"12/12/2030",
+    "descripcion":"n",
+    "estado":"sin estado"
 }
