@@ -6,10 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LaboratoryEntity } from './laboratory/laboratory.entity';
 import { DamageModule } from './damage/damage.module';
 import { DamageEntity } from './damage/damage.entity';
+import { EquipoEntity } from './equipos/equipo.entity';
+import { EquipoModule } from './equipos/equipo.module';
 
 
 @Module({
-  imports: [ LaboratoryModule, DamageModule,
+  imports: [ LaboratoryModule, DamageModule, EquipoModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -17,7 +19,7 @@ import { DamageEntity } from './damage/damage.entity';
       username: 'postgres',
       password: '123',
       database: 'yavilab',
-      entities: [LaboratoryEntity, DamageEntity],
+      entities: [LaboratoryEntity, DamageEntity, EquipoEntity],
       synchronize: true,
     }),
   ],

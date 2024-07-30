@@ -16,9 +16,19 @@
 
 {
     "numero_serie":"2023s",
-    "hora_dano":"12h",
-    "fecha_dano":"12/12/2028",
-    "fecha_cambio":"12/12/2030",
+    "hora_dano":"19:30:00",
+    "fecha_dano":"12/12/1012",
+    "fecha_cambio":"12/12/1018",
     "descripcion":"n",
     "estado":"sin estado"
+}
+
+//equipo
+{
+    "numero_serie":"2024s",
+    "descripcion_equipo":"hola",
+    "marca":"hp",
+    "modelo":"2022",
+    "estado":"dañaso",
+    "laboratorio":"xian"
 }
