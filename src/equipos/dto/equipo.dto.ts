@@ -1,4 +1,5 @@
-import { IsNotEmpty, MinLength } from "class-validator";
+import { IsNotEmpty, IsObject, MinLength } from "class-validator";
+import { LaboratoryDto } from "src/laboratory/dto/laboratory.dto";
 
 export class EquipoDto{
 
@@ -20,5 +21,9 @@ export class EquipoDto{
 
     @IsNotEmpty()
     laboratorio: string;
+
+    @IsNotEmpty()
+    @IsObject()
+    laboratory: LaboratoryDto; // 
 
 }

@@ -1,4 +1,5 @@
-import { IsNotEmpty, MinLength } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNotEmpty, MinLength, ValidateNested } from "class-validator";
 
 export class LaboratoryDto {
 

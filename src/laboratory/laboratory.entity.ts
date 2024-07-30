@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { EquipoEntity } from "src/equipos/equipo.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'laboratory'})
 export class LaboratoryEntity{
@@ -35,4 +36,7 @@ export class LaboratoryEntity{
 
     @Column()
     observaciones: string;
+
+    @OneToMany(() => EquipoEntity, equipo => equipo.laboratory)
+    equipos: EquipoEntity[];
 }

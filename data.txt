@@ -32,3 +32,13 @@
     "estado":"dañaso",
     "laboratorio":"xian"
 }
+
+//usuario
+{
+  "nombre":"Hernan",
+  "apellido":"Mejia",
+  "email":"Hernan@gmail.com",
+  "contrasena":"hola-juan",
+  "rol":"usuario"
+
+}
