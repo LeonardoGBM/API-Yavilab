@@ -6,6 +6,9 @@ export class UpdateDamageDto extends PickType(DamageDto,[
     'hora_dano',
     'fecha_dano',
     'fecha_cambio',
-    'estado',
-    'descripcion'
-]){}
+    'lab_nombre',
+    'descripcion',
+    'equipo'
+]){
+
+}

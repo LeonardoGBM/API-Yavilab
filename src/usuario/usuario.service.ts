@@ -7,6 +7,7 @@ import { UpdateUsuarioDto } from "./dto/update.usuario.dto";
 
 @Injectable()
 export class UsuarioService{
+  
     constructor(
         @InjectRepository(UsuarioEntity)
         private usuarioRepository: Repository<UsuarioEntity>,

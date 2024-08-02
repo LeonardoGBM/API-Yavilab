@@ -1,74 +1,87 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { EquipoEntity } from "./equipo.entity";
-import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { EquipoEntity } from "./equipo.entity";
 import { EquipoDto } from "./dto/equipo.dto";
 import { UpdateEquipoDto } from "./dto/update.equipo";
+import { Laboratorio } from "src/laboratory/laboratorio.entity";
 
 @Injectable()
 export class EquipoService {
   constructor(
     @InjectRepository(EquipoEntity)
     private equipoRepository: Repository<EquipoEntity>,
-  ) { }
 
+    @InjectRepository(Laboratorio)
+    private laboratorioRepository: Repository<Laboratorio>,
+  ) {}
 
   async find() {
-    const equipo = await this.equipoRepository.find();
-    return equipo
+    return this.equipoRepository.find({ relations: ['laboratorio'] });
   }
-
 
   async findOne(id: number) {
-    const equipoid = await this.equipoRepository.findOne({ where: { id: id } });
+    const equipo = await this.equipoRepository.findOne({ where: { id }, relations: ['laboratorio'] });
 
-    if (equipoid === null) {
+    if (!equipo) {
       throw new NotFoundException({ message: 'Equipo no encontrado', error: 'No encontrado' });
     }
 
-    return equipoid;
+    return equipo;
   }
 
-  async create(payload: EquipoDto) {
-    const newEquipo = this.equipoRepository.create()
-    newEquipo.numero_serie = payload.numero_serie;
-    newEquipo.descripcion_equipo = payload.descripcion_equipo;
-    newEquipo.marca = payload.marca;
-    newEquipo.modelo = payload.modelo;
-    newEquipo.estado = payload.estado;
-    newEquipo.laboratorio = payload.laboratorio;
-
-    const response = await this.equipoRepository.save(newEquipo);
-    return response;
+  async create(payload: EquipoDto): Promise<EquipoEntity> {
+    // Primero, verifica si el laboratorio existe
+    if (payload.laboratorio) {
+      const laboratorio = await this.laboratorioRepository.findOne({ where: { id: payload.laboratorio.id } });
+  
+      if (!laboratorio) {
+        throw new NotFoundException({ message: 'Laboratorio no encontrado', error: 'No encontrado' });
+      }
+  
+      // Crea una nueva entidad de equipo con la relación de laboratorio
+      const newEquipo = this.equipoRepository.create({
+        ...payload,
+        laboratorio: laboratorio
+      });
+  
+      // Guarda el nuevo equipo en la base de datos
+      return await this.equipoRepository.save(newEquipo);
+    } else {
+      // Si no se proporciona un laboratorio, solo crea el equipo sin la relación
+      const newEquipo = this.equipoRepository.create(payload);
+      return await this.equipoRepository.save(newEquipo);
+    }
   }
-
+  
 
   async update(id: number, payload: UpdateEquipoDto) {
-    const Equipo = await this.findOne(id)
+    const equipo = await this.findOne(id);
 
-    if (Equipo === null) {
+    if (!equipo) {
       throw new NotFoundException({ message: 'Equipo no encontrado', error: 'No encontrado' });
     }
 
-    Equipo.numero_serie = payload.numero_serie;
-    Equipo.descripcion_equipo = payload.descripcion_equipo;
-    Equipo.marca = payload.marca;
-    Equipo.modelo = payload.modelo;
-    Equipo.estado = payload.estado;
-    Equipo.laboratorio = payload.laboratorio;
+    if (payload.laboratorio) {
+      const laboratorio = await this.laboratorioRepository.findOne({ where: { id: payload.laboratorio.id } });
+      if (!laboratorio) {
+        throw new NotFoundException({ message: 'Laboratorio no encontrado', error: 'No encontrado' });
+      }
+      equipo.laboratorio = laboratorio;
+    }
 
-    const response = await this.equipoRepository.update(id, Equipo);
-    return response;
+    // Merges the updated fields from payload into the existing equipo entity
+    this.equipoRepository.merge(equipo, payload);
+    return this.equipoRepository.save(equipo);
   }
 
-
   async delete(id: number) {
-    const Equipo = await this.findOne(id)
+    const equipo = await this.findOne(id);
 
-    if (Equipo === null) {
+    if (!equipo) {
       throw new NotFoundException({ message: 'Equipo no encontrado', error: 'No encontrado' });
     }
-    const response = await this.equipoRepository.delete(id);
-    return response;
+
+    return this.equipoRepository.delete(id);
   }
 }

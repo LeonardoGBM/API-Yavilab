@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { EquipoEntity } from "src/equipos/equipo.entity"
 
 @Entity({name: 'damage'})
 export class DamageEntity{
@@ -22,6 +23,10 @@ export class DamageEntity{
     descripcion: string;
 
     @Column()
-    estado: string;
+    lab_nombre: string;
+
+    @ManyToOne(() => EquipoEntity)
+    @JoinColumn({ name: 'equipo_id' })
+    equipo: EquipoEntity;
 
 }
