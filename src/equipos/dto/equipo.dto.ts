@@ -1,29 +1,29 @@
-import { IsNotEmpty, IsObject, MinLength } from "class-validator";
-import { LaboratoryDto } from "src/laboratory/dto/laboratory.dto";
+import { IsNotEmpty, IsObject, MinLength } from 'class-validator';
+import { LaboratoryDto } from 'src/laboratory/dto/laboratory.dto';
 
-export class EquipoDto{
+export class EquipoDto {
+  @MinLength(3, {
+    message: 'El nombre del laboratorio debe tener mínimo 3 letras',
+  })
+  @IsNotEmpty()
+  numero_serie: string;
 
-    @MinLength(3, { message: 'El nombre del laboratorio debe tener mínimo 3 letras' })
-    @IsNotEmpty()
-    numero_serie: string;
+  @IsNotEmpty()
+  descripcion_equipo: string;
 
-    @IsNotEmpty()
-    descripcion_equipo: string;
+  @IsNotEmpty()
+  marca: string;
 
-    @IsNotEmpty()
-    marca: string;
+  @IsNotEmpty()
+  modelo: string;
 
-    @IsNotEmpty()
-    modelo:string;
-    
-    @IsNotEmpty()
-    estado: string;
+  @IsNotEmpty()
+  estado: string;
 
-    @IsNotEmpty()
-    laboratorio: string;
+  @IsNotEmpty()
+  laboratorio: string;
 
-    @IsNotEmpty()
-    @IsObject()
-    laboratory: LaboratoryDto; // 
-
+  @IsNotEmpty()
+  @IsObject()
+  laboratory: LaboratoryDto; //
 }

@@ -1,27 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name: 'damage'})
-export class DamageEntity{
+@Entity({ name: 'damage' })
+export class DamageEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  numero_serie: string;
 
-    @Column()
-    numero_serie: string;
+  @Column({ type: 'time' })
+  hora_dano: string;
 
-    @Column({ type: 'time' })
-    hora_dano: string;
+  @Column()
+  fecha_dano: Date;
 
-    @Column()
-    fecha_dano: Date;
+  @Column()
+  fecha_cambio: Date;
 
-    @Column()
-    fecha_cambio: Date;
+  @Column()
+  descripcion: string;
 
-    @Column()
-    descripcion: string;
-
-    @Column()
-    estado: string;
-
+  @Column()
+  estado: string;
 }

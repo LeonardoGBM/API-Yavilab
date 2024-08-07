@@ -1,37 +1,39 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { LaboratoryEntity } from "./laboratory.entity";
-import { LaboratoryDto } from "./dto/laboratory.dto";
-import { UpdateLaboratoryDto } from "./dto/update-laboratory.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LaboratoryEntity } from './laboratory.entity';
+import { LaboratoryDto } from './dto/laboratory.dto';
+import { UpdateLaboratoryDto } from './dto/update-laboratory.dto';
 
 @Injectable()
 export class LaboratoryService {
-
   constructor(
     @InjectRepository(LaboratoryEntity)
     private laboratoryRepository: Repository<LaboratoryEntity>,
-  ) { }
-
+  ) {}
 
   async find() {
     const laboratory = await this.laboratoryRepository.find();
-    return laboratory
+    return laboratory;
   }
 
-
   async findOne(id: number) {
-    const laboratoryid = await this.laboratoryRepository.findOne({ where: { id: id } });
+    const laboratoryid = await this.laboratoryRepository.findOne({
+      where: { id: id },
+    });
 
     if (laboratoryid === null) {
-      throw new NotFoundException({ message:'Laboratorio no encontrado', error:'No encontrado'});
+      throw new NotFoundException({
+        message: 'Laboratorio no encontrado',
+        error: 'No encontrado',
+      });
     }
 
     return laboratoryid;
   }
 
   async create(payload: LaboratoryDto) {
-    const newLaboratory = this.laboratoryRepository.create()
+    const newLaboratory = this.laboratoryRepository.create();
     newLaboratory.nombre_lab = payload.nombre_lab;
     newLaboratory.monitores = payload.monitores;
     newLaboratory.cpu = payload.cpu;
@@ -47,12 +49,14 @@ export class LaboratoryService {
     return response;
   }
 
-
   async update(id: number, payload: UpdateLaboratoryDto) {
-    const Laboratory = await this.findOne(id)
+    const Laboratory = await this.findOne(id);
 
     if (Laboratory === null) {
-      throw new NotFoundException({ message:'Laboratorio no encontrado', error:'No encontrado'});
+      throw new NotFoundException({
+        message: 'Laboratorio no encontrado',
+        error: 'No encontrado',
+      });
     }
 
     Laboratory.nombre_lab = payload.nombre_lab;
@@ -70,12 +74,14 @@ export class LaboratoryService {
     return response;
   }
 
-  
   async delete(id: number) {
-    const Laboratory = await this.findOne(id)
+    const Laboratory = await this.findOne(id);
 
     if (Laboratory === null) {
-      throw new NotFoundException({ message:'Laboratorio no encontrado', error:'No encontrado'});
+      throw new NotFoundException({
+        message: 'Laboratorio no encontrado',
+        error: 'No encontrado',
+      });
     }
     const response = await this.laboratoryRepository.delete(id);
     return response;

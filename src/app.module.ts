@@ -10,16 +10,21 @@ import { EquipoEntity } from './equipos/equipo.entity';
 import { EquipoModule } from './equipos/equipo.module';
 import { UsuarioEntity } from './usuario/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
-
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ LaboratoryModule, DamageModule, EquipoModule, UsuarioModule,
+  imports: [
+    LaboratoryModule,
+    DamageModule,
+    EquipoModule,
+    UsuarioModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '123',
+      password: '1234',
       database: 'yavilab',
       entities: [LaboratoryEntity, DamageEntity, EquipoEntity, UsuarioEntity],
       synchronize: true,

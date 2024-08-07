@@ -1,26 +1,25 @@
-import { IsDateString, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
+export class DamageDto {
+  @MinLength(3, {
+    message: 'El número de serie debe contener al menos 3 caracteres',
+  })
+  @IsNotEmpty()
+  numero_serie: string;
 
-export class DamageDto{
+  @IsString()
+  @IsNotEmpty()
+  hora_dano: string;
 
-    @MinLength(3, { message: 'El número de serie debe contener al menos 3 caracteres' })
+  @IsNotEmpty()
+  fecha_dano: Date;
 
-    @IsNotEmpty()
-    numero_serie: string;
+  @IsNotEmpty()
+  fecha_cambio: Date;
 
-    @IsString()
-    @IsNotEmpty()
-    hora_dano: string;
+  @IsNotEmpty()
+  descripcion: string;
 
-    @IsNotEmpty()
-    fecha_dano: Date;
-
-    @IsNotEmpty()
-    fecha_cambio: Date;
-
-    @IsNotEmpty()
-    descripcion: string;
-    
-    @IsNotEmpty()
-    estado: string;
+  @IsNotEmpty()
+  estado: string;
 }
