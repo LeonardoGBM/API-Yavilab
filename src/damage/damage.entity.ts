@@ -1,25 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { EquipoEntity } from "src/equipos/equipo.entity"
 
-@Entity({ name: 'damage' })
-export class DamageEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity({name: 'damage'})
+export class DamageEntity{
 
-  @Column()
-  numero_serie: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ type: 'time' })
-  hora_dano: string;
+    @Column()
+    numero_serie: string;
 
-  @Column()
-  fecha_dano: Date;
+    @Column({ type: 'time' })
+    hora_dano: string;
 
-  @Column()
-  fecha_cambio: Date;
+    @Column()
+    fecha_dano: Date;
 
-  @Column()
-  descripcion: string;
+    @Column()
+    fecha_cambio: Date;
 
-  @Column()
-  estado: string;
+    @Column()
+    descripcion: string;
+
+    @Column()
+    lab_nombre: string;
+
+    @ManyToOne(() => EquipoEntity)
+    @JoinColumn({ name: 'equipo_id' })
+    equipo: EquipoEntity;
+
 }

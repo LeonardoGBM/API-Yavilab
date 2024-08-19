@@ -1,9 +1,6 @@
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class DamageDto {
-  @MinLength(3, {
-    message: 'El número de serie debe contener al menos 3 caracteres',
-  })
   @IsNotEmpty()
   numero_serie: string;
 
@@ -21,5 +18,8 @@ export class DamageDto {
   descripcion: string;
 
   @IsNotEmpty()
-  estado: string;
+  lab_nombre: string;
+
+  @IsOptional()
+  equipo?: { id: number }; // Es opcional y contiene solo el id
 }

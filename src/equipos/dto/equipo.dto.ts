@@ -1,10 +1,6 @@
-import { IsNotEmpty, IsObject, MinLength } from 'class-validator';
-import { LaboratoryDto } from 'src/laboratory/dto/laboratory.dto';
+import { IsNotEmpty, IsObject, IsOptional } from "class-validator";
 
 export class EquipoDto {
-  @MinLength(3, {
-    message: 'El nombre del laboratorio debe tener mínimo 3 letras',
-  })
   @IsNotEmpty()
   numero_serie: string;
 
@@ -21,9 +17,8 @@ export class EquipoDto {
   estado: string;
 
   @IsNotEmpty()
-  laboratorio: string;
+  lab: string;
 
-  @IsNotEmpty()
-  @IsObject()
-  laboratory: LaboratoryDto; //
+  @IsOptional()
+  laboratorio?: { id: number };
 }

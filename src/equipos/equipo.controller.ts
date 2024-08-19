@@ -1,18 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EquipoDto } from './dto/equipo.dto';
-import { UpdateEquipoDto } from './dto/update.equipo';
-import { EquipoService } from './equipo.service';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { EquipoDto } from "./dto/equipo.dto";
+import { UpdateEquipoDto } from "./dto/update.equipo";
+import { EquipoService } from "./equipo.service";
 
 @ApiTags('Equipo')
 @Controller('equipo')
@@ -21,42 +11,33 @@ export class EquipoController {
 
   @ApiOperation({ description: 'Traer equipos', summary: 'Encontrar equipos' })
   @Get()
-  async find(@Query() query: any) {
-    const response = await this.equipoService.find();
-    return response;
+  async find() {
+    return this.equipoService.find();
   }
 
   @ApiOperation({ description: 'Traer equipo', summary: 'Encontrar equipo' })
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const response = await this.equipoService.findOne(id);
-    return response;
+    return this.equipoService.findOne(id);
   }
 
   @ApiOperation({ description: 'Crear equipo', summary: 'Crear equipo' })
   @Post()
   async create(@Body() crearEquipo: EquipoDto) {
+    console.log('DTO recibido:', crearEquipo);
     const response = await this.equipoService.create(crearEquipo);
     return response;
   }
 
-  @ApiOperation({
-    description: 'Actualizar equipo',
-    summary: 'Actualizar equipo',
-  })
+  @ApiOperation({ description: 'Actualizar equipo', summary: 'Actualizar equipo' })
   @Put(':id')
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateEquipo: UpdateEquipoDto,
-  ) {
-    const response = await this.equipoService.update(id, updateEquipo);
-    return response;
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateEquipo: UpdateEquipoDto) {
+    return this.equipoService.update(id, updateEquipo);
   }
 
   @ApiOperation({ description: 'Eliminar equipo', summary: 'Eliminar equipo' })
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
-    const response = await this.equipoService.delete(id);
-    return response;
+    return this.equipoService.delete(id);
   }
 }

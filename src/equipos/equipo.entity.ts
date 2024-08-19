@@ -1,14 +1,9 @@
-import { LaboratoryEntity } from 'src/laboratory/laboratory.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Laboratorio } from "src/laboratory/laboratorio.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'equipo' })
 export class EquipoEntity {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,9 +23,9 @@ export class EquipoEntity {
   estado: string;
 
   @Column()
-  laboratorio: string;
+  lab: string;
 
-  @ManyToOne(() => LaboratoryEntity, (laboratorio) => laboratorio.equipos)
-  @JoinColumn({ name: 'laboratorio_id' })
-  laboratory: LaboratoryEntity;
+  @ManyToOne(() => Laboratorio)
+  @JoinColumn({name: 'laboratorio_id'})
+  laboratorio: Laboratorio;
 }

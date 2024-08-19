@@ -1,37 +1,37 @@
-import { Type } from 'class-transformer';
-import { IsNotEmpty, MinLength, ValidateNested } from 'class-validator';
+import { Type } from "class-transformer";
+import { IsNotEmpty, MinLength, ValidateNested } from "class-validator";
 
 export class LaboratoryDto {
-  @MinLength(3, {
-    message: 'El nombre del laboratorio debe tener mínimo 3 letras',
-  })
-  @IsNotEmpty()
-  nombre_lab: string;
 
-  @IsNotEmpty()
-  monitores: string;
+    @MinLength(3, { message: 'El nombre del laboratorio debe tener mínimo 3 letras' })
+    @IsNotEmpty()
+    nombre_lab: string;
 
-  @IsNotEmpty()
-  cpu: string;
+    @IsNotEmpty()
+    monitores: string;
 
-  @IsNotEmpty()
-  teclado: string;
+    @IsNotEmpty()
+    cpu: string;
 
-  @IsNotEmpty()
-  audifonos: string;
+    @IsNotEmpty()
+    teclado: string;
 
-  @IsNotEmpty()
-  infocus: string;
+    @IsNotEmpty()
+    audifonos: string;
 
-  @IsNotEmpty()
-  mouse: string;
+    @IsNotEmpty()
+    infocus: string;
 
-  @IsNotEmpty()
-  sillas: string;
+    @IsNotEmpty()
+    mouse: string;
 
-  @IsNotEmpty()
-  mesas: string;
+    @IsNotEmpty()
+    sillas: string;
 
-  @IsNotEmpty()
-  observaciones: string;
+    @IsNotEmpty()
+    mesas: string;
+
+    @IsNotEmpty()
+    observaciones: string;
+
 }

@@ -1,79 +1,81 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { DamageEntity } from './damage.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UpdateDamageDto } from './dto/update.laboratory';
-import { DamageDto } from './dto/damage.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { DamageEntity } from "./damage.entity";
+import { DamageDto } from "./dto/damage.dto";
+import { UpdateDamageDto } from "./dto/update.laboratory";
+import { EquipoEntity } from "src/equipos/equipo.entity";
 
 @Injectable()
 export class DamageService {
   constructor(
     @InjectRepository(DamageEntity)
     private damageRepository: Repository<DamageEntity>,
+
+    @InjectRepository(EquipoEntity)
+    private equipoRepository: Repository<EquipoEntity>,
   ) {}
 
+
   async find() {
-    const damage = await this.damageRepository.find();
-    return damage;
+    return this.damageRepository.find({ relations: ['equipo'] });
+    
   }
 
   async findOne(id: number) {
-    const damageid = await this.damageRepository.findOne({ where: { id: id } });
+    const damage = await this.damageRepository.findOne({
+      where: { id },
+      relations: ['equipo'],
+    });
 
-    if (damageid === null) {
-      throw new NotFoundException({
-        message: 'Daño no encontrado',
-        error: 'No encontrado',
-      });
+    if (!damage) {
+      throw new NotFoundException({ message: 'Daño no encontrado', error: 'No encontrado' });
     }
 
-    return damageid;
+    return damage;
   }
 
   async create(payload: DamageDto) {
-    const newDamage = this.damageRepository.create();
-    newDamage.numero_serie = payload.numero_serie;
-    newDamage.hora_dano = payload.hora_dano;
-    newDamage.fecha_dano = payload.fecha_dano;
-    newDamage.fecha_cambio = payload.fecha_cambio;
-    newDamage.descripcion = payload.descripcion;
-    newDamage.estado = payload.estado;
+    let equipo: EquipoEntity | undefined;
 
-    const response = await this.damageRepository.save(newDamage);
-    return response;
+    if (payload.equipo) {
+      equipo = await this.equipoRepository.findOne({ where: { id: payload.equipo.id } });
+
+      if (!equipo) {
+        throw new NotFoundException({ message: 'Equipo no encontrado', error: 'No encontrado' });
+      }
+    }
+
+    const newDamage = this.damageRepository.create({
+      ...payload,
+      equipo: equipo || null, // Asigna el equipo si existe, o null si no está definido
+    });
+
+    return this.damageRepository.save(newDamage);
   }
 
   async update(id: number, payload: UpdateDamageDto) {
-    const Damage = await this.findOne(id);
+    const damage = await this.findOne(id);
 
-    if (Damage === null) {
-      throw new NotFoundException({
-        message: 'Daño no encontrado',
-        error: 'No encontrado',
-      });
+    if (payload.equipo) {
+      const equipo = await this.equipoRepository.findOne({ where: { id: payload.equipo.id } });
+      if (!equipo) {
+        throw new NotFoundException({ message: 'Equipo no encontrado', error: 'No encontrado' });
+      }
+      damage.equipo = equipo;
     }
 
-    Damage.numero_serie = payload.numero_serie;
-    Damage.hora_dano = payload.hora_dano;
-    Damage.fecha_dano = payload.fecha_dano;
-    Damage.fecha_cambio = payload.fecha_cambio;
-    Damage.descripcion = payload.descripcion;
-    Damage.estado = payload.estado;
-
-    const response = await this.damageRepository.update(id, Damage);
-    return response;
+    this.damageRepository.merge(damage, payload);
+    return this.damageRepository.save(damage);
   }
 
   async delete(id: number) {
-    const Damage = await this.findOne(id);
+    const damage = await this.findOne(id);
 
-    if (Damage === null) {
-      throw new NotFoundException({
-        message: 'Daño no encontrado',
-        error: 'No encontrado',
-      });
+    if (!damage) {
+      throw new NotFoundException({ message: 'Daño no encontrado', error: 'No encontrado' });
     }
-    const response = await this.damageRepository.delete(id);
-    return response;
+
+    return this.damageRepository.delete(id);
   }
 }
