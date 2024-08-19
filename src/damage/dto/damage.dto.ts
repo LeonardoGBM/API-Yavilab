@@ -20,6 +20,9 @@ export class DamageDto {
   @IsNotEmpty()
   lab_nombre: string;
 
+  @IsNotEmpty()
+  estado: string;
+
   @IsOptional()
   equipo?: { id: number }; // Es opcional y contiene solo el id
 }

@@ -25,6 +25,10 @@ export class DamageEntity{
     @Column()
     lab_nombre: string;
 
+    
+    @Column()
+    estado: string;
+
     @ManyToOne(() => EquipoEntity)
     @JoinColumn({ name: 'equipo_id' })
     equipo: EquipoEntity;
